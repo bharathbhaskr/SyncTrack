@@ -1,0 +1,16 @@
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
+from sqlalchemy import text
+
+from db import get_db
+
+app = FastAPI(title="BuddyCheck API")
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+@app.get("/db-check")
+def db_check(db: Session = Depends(get_db)):
+    db.execute(text("SELECT 1"))
+    return {"db": "ok"}
