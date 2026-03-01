@@ -8,6 +8,10 @@ on:
 jobs:
   test-api:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql+psycopg2://buddy:buddy@localhost:5432/buddycheck
+      JWT_SECRET: ci-secret
+      PYTHONPATH: apps/api
 
     services:
       postgres:
@@ -43,6 +47,7 @@ jobs:
         env:
           DATABASE_URL: postgresql+psycopg2://buddy:buddy@localhost:5432/buddycheck
           JWT_SECRET: ci-secret
+          PYTHONPATH: .
         run: |
           python -m alembic upgrade head
 
@@ -51,5 +56,6 @@ jobs:
         env:
           DATABASE_URL: postgresql+psycopg2://buddy:buddy@localhost:5432/buddycheck
           JWT_SECRET: ci-secret
+          PYTHONPATH: .
         run: |
           pytest -q
