@@ -95,3 +95,10 @@ def share_checklist(checklist_id: int, payload: ShareIn, db: Session = Depends(g
         raise HTTPException(status_code=404, detail="User not found")
 
     return {"checklist_id": checklist_id, "shared_with": payload.email}
+
+@app.get("/")
+def root():
+    return {
+        "service": "BuddyCheck API",
+        "status": "running"
+    }
